@@ -6,7 +6,8 @@ contract Ballot{
 		uint id; 
 		bool hasVoted; //true if the voter has already voted
 		uint vote; 		// 
-
+		uint numberOfVote;
+		uint maxOfVote;
 	}
 
 	struct Proposal{
@@ -20,8 +21,10 @@ contract Ballot{
 
 
 	//Constructor
-	function Ballot(bytes32[] allProposals)
+	function Ballot(bytes32[] allProposals, uint maxVote)
 	{
+		Voter sender;
+		sender.maxOfVote = maxVote;
 		for(uint i = 0; i<allProposals.length; i++)
 		{
 			Proposal p;
@@ -40,22 +43,26 @@ contract Ballot{
 		if(sender.hasVoted){
 			throw;
 		}
-		sender.hasVoted = true;
-		sender.vote = proposal;
+		if ( sender.numberOfVote < sender.maxOfVote)
+		{
+			sender.hasVoted = true;
+			sender.vote = proposal;
 
-		proposals[proposal].nbVote +=1;
+			proposals[proposal].nbVote +=1;
+			sender.numberOfVote +=1;
+		}
 	}
 
 	function winningProposal() constant
 				returns(uint winningProposal)
 	{
-		uint maxVote = 0;
+		uint winningVoteCount = 0;
 
 		for(uint i = 0; i<proposals.length; i++)
 		{
-			if(proposals[i].nbVote > maxVote)
+			if(proposals[i].nbVote > winningVoteCount)
 			{
-				maxVote = proposals[i].nbVote;
+				winningVoteCount = proposals[i].nbVote;
 				winningProposal = i;
 			}
 		}
