@@ -1,5 +1,3 @@
-# solidity-smart-contracts
-
 pragma solidity ^0.4.0;
 contract Ballot{
 	
@@ -11,18 +9,12 @@ contract Ballot{
 
 	}
 
-
-
-
-
 	struct Proposal{
-		uint propTitle; //proposal name
-		unit nbVote;	  //cumulated votes for this proposal
+		uint propTitle;  //proposal name
+		uint nbVote;	  //cumulated votes for this proposal
 	}
 
-
-
-	Proposal[] public proposals
+	Proposal[] public proposals; // create dynamix array
 
 	mapping(address => Voter) public voters;
 
@@ -40,11 +32,6 @@ contract Ballot{
 		}
 	}
 
-
-
-
-
-
 	//Modifiers
 	function vote(uint proposal)
 	{
@@ -59,7 +46,6 @@ contract Ballot{
 		proposals[proposal].nbVote +=1;
 	}
 
-
 	function winner()
 	{
 		uint winnerVote = 0;
@@ -67,16 +53,9 @@ contract Ballot{
 		{
 			if(proposals[i].nbVote > winnerVote)
 			{
-				winnerVote = proposals[i].nbVote
+				winnerVote = proposals[i].nbVote;
 			}
 		}
 	}
-
-
-
-
-
-
-
 
 }
