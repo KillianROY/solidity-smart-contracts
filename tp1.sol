@@ -10,7 +10,7 @@ contract Ballot{
 	}
 
 	struct Proposal{
-		uint propTitle;  //proposal name
+		bytes32 propTitle;  //proposal name
 		uint nbVote;	  //cumulated votes for this proposal
 	}
 
@@ -20,7 +20,7 @@ contract Ballot{
 
 
 	//Constructor
-	function Ballot(uint[] allProposals)
+	function Ballot(bytes32[] allProposals)
 	{
 		for(uint i = 0; i<allProposals.length; i++)
 		{
