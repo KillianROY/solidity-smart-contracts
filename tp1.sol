@@ -46,16 +46,25 @@ contract Ballot{
 		proposals[proposal].nbVote +=1;
 	}
 
-	function winner()
+	function winningProposal() constant
+				returns(uint winningProposal)
 	{
-		uint winnerVote = 0;
+		uint maxVote = 0;
+
 		for(uint i = 0; i<proposals.length; i++)
 		{
-			if(proposals[i].nbVote > winnerVote)
+			if(proposals[i].nbVote > maxVote)
 			{
-				winnerVote = proposals[i].nbVote;
+				maxVote = proposals[i].nbVote;
+				winningProposal = i;
 			}
 		}
+	}
+
+
+	function winner() constant returns (bytes32 winner)
+	{
+		winner = proposals[winningProposal()].propTitle;
 	}
 
 }
