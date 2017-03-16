@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.4;
 
 contract Token {
 
@@ -36,40 +36,3 @@ contract Token {
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 }
-
-contract LocalCurrency is Token {
-  
-    mapping (address => uint256) balances;
-    
-    /// @param _owner The address of the account to add new localCurrency
-    /// @param _LctoCreate The amount of localCurrency to create
-    /// @return Wether the creation is succesful or note
-    function create(address _owner, uint256 _LctoCreate) returns (bool success){
-    
-    	 if (balances[msg.sender] >= _LctoCreate && _LctoCreate > 0) {
-            balances[msg.sender] -= _LctoCreate;
-            balances[_owner] += _LctoCreate;
-            Transfer(msg.sender, _owner, _LctoCreate);
-            return true;
-        } else { return false; }
-    }
-
-    /// @param _owner The address of the account to add new localCurrency
-    /// @param _LctoDestruct The amount of localCurrency to destruct
-    /// @return Wether the creation is succesful or note
-    function destruct(address _owner, uint256 _LctoDestruct) returns (bool success){
-        
-        if (balances[_owner] >= _LctoDestruct && _LctoDestruct > 0) {
-            balances[_owner] -= _LctoDestruct;
-            balances[msg.sender] += _LctoDestruct;
-            Transfer(_owner,msg.sender, _LctoDestruct);
-            return true;
-        } else { return false; }
-    }
-
-
-
-
-    
-}
-

@@ -70,7 +70,7 @@ contract Ballot{
 
 
 	function winner() constant returns (bytes32 winner)
-	{
+	{	
 		winner = proposals[winningProposal()].propTitle;
 	}
 
