@@ -38,15 +38,23 @@ contract Token {
 }
 
 contract LocalCurrency is Token {
-  
+
+    // STRUCTURES
+
+    // VARIABLES
+
     mapping (address => uint256) balances;
-    
+
+    // MODIFIER
+
+    // CONSTRUCTOR
+
     /// @param _owner The address of the account to add new localCurrency
     /// @param _LctoCreate The amount of localCurrency to create
     /// @return Wether the creation is succesful or note
     function create(address _owner, uint256 _LctoCreate) returns (bool success){
     
-    	 if (balances[msg.sender] >= _LctoCreate && _LctoCreate > 0) {
+         if (balances[msg.sender] >= _LctoCreate && _LctoCreate > 0) {
             balances[msg.sender] -= _LctoCreate;
             balances[_owner] += _LctoCreate;
             Transfer(msg.sender, _owner, _LctoCreate);
@@ -66,5 +74,9 @@ contract LocalCurrency is Token {
             return true;
         } else { return false; }
     }
+
+    // FUNCTIONS
+   
+    
 }
 
