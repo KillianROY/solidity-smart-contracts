@@ -1,6 +1,9 @@
 pragma solidity ^0.4.0;
 contract Ballot{
-	
+
+
+	// STRUCTURES
+
 	struct Voter{
 
 		uint id; 
@@ -15,12 +18,13 @@ contract Ballot{
 		uint nbVote;	  //cumulated votes for this proposal
 	}
 
-	Proposal[] public proposals; // create dynamix array
+	// VARIABLES
 
+	Proposal[] public proposals; // create dynamix array
 	mapping(address => Voter) public voters;
 
 
-	//Constructor
+	// CONSTRUCTOR
 	function Ballot(bytes32[] allProposals, uint maxVote)
 	{
 		Voter sender;
@@ -35,7 +39,8 @@ contract Ballot{
 		}
 	}
 
-	//Modifiers
+	// MODIFIER
+
 	function vote(uint proposal)
 	{
 		Voter sender;
@@ -53,6 +58,8 @@ contract Ballot{
 		}
 	}
 
+	// FUNCTIONS
+
 	function winningProposal() constant
 				returns(uint winningProposal)
 	{
@@ -67,7 +74,6 @@ contract Ballot{
 			}
 		}
 	}
-
 
 	function winner() constant returns (bytes32 winner)
 	{	

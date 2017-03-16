@@ -48,7 +48,9 @@ contract LocalCurrency is Token {
     // MODIFIER
 
     // CONSTRUCTOR
-
+    function localCurrency(){
+        
+    }
     /// @param _owner The address of the account to add new localCurrency
     /// @param _LctoCreate The amount of localCurrency to create
     /// @return Wether the creation is succesful or note
