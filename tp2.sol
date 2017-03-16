@@ -76,7 +76,7 @@ contract LocalCurrency is Token {
     }
 
     // FUNCTIONS
-   
+
     
 }
 
