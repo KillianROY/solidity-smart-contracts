@@ -14,70 +14,70 @@ contract Ballot{
 	}
 
 	struct Proposal{
+
 		bytes32 propTitle;  //proposal name
 		uint nbVote;	  //cumulated votes for this proposal
 	}
 
 	// VARIABLES
 
-	Proposal[] public proposals; // create dynamix array
-	mapping(address => Voter) public voters;
+	Proposal[] public _proposals; // create dynamix array
+	mapping(address => Voter) public _voters;
 
 
 	// CONSTRUCTOR
-	function Ballot(bytes32[] allProposals, uint maxVote)
-	{
-		Voter sender;
-		sender.maxOfVote = maxVote;
-		for(uint i = 0; i<allProposals.length; i++)
-		{
-			Proposal p;
-			p.propTitle = allProposals[i];
-			p.nbVote = 0;
+	function Ballot(bytes32[] _allProposals, uint _maxVote){
 
-			proposals.push(p);
+		Voter _sender;
+		_sender.maxOfVote = _maxVote;
+		for(uint i = 0; i<_allProposals.length; i++)
+		{
+			Proposal _p;
+			_p.propTitle = _allProposals[i];
+			_p.nbVote = 0;
+
+			_proposals.push(_p);
 		}
 	}
 
 	// MODIFIER
 
-	function vote(uint proposal)
-	{
-		Voter sender;
+	function vote(uint _proposal){
 
-		if(sender.hasVoted){
+		Voter _sender;
+
+		if(_sender.hasVoted){
 			throw;
 		}
-		if ( sender.numberOfVote < sender.maxOfVote)
+		if ( _sender.numberOfVote < _sender.maxOfVote)
 		{
-			sender.hasVoted = true;
-			sender.vote = proposal;
+			_sender.hasVoted = true;
+			_sender.vote = _proposal;
 
-			proposals[proposal].nbVote +=1;
-			sender.numberOfVote +=1;
+			_proposals[_proposal].nbVote +=1;
+			_sender.numberOfVote +=1;
 		}
 	}
 
 	// FUNCTIONS
 
-	function winningProposal() constant
-				returns(uint winningProposal)
-	{
-		uint winningVoteCount = 0;
+	function winningProposal() constant returns(uint winningProposal){
 
-		for(uint i = 0; i<proposals.length; i++)
+		uint _winningVoteCount = 0;
+
+		for(uint i = 0; i<_proposals.length; i++)
 		{
-			if(proposals[i].nbVote > winningVoteCount)
+			if(_proposals[i].nbVote > _winningVoteCount)
 			{
-				winningVoteCount = proposals[i].nbVote;
+				_winningVoteCount = _proposals[i].nbVote;
 				winningProposal = i;
 			}
 		}
 	}
 
-	function winner() constant returns (bytes32 winner)
-	{	
-		winner = proposals[winningProposal()].propTitle;
+	function winner() constant returns (bytes32 winner){
+
+		winner = _proposals[winningProposal()].propTitle;
 	}
 
 }
