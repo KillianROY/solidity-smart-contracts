@@ -39,46 +39,63 @@ contract Token {
 
 contract LocalCurrency is Token {
 
-    // STRUCTURES
-
     // VARIABLES
 
-    mapping (address => uint256) balances;
-
+    mapping (address => uint256) public balanceOf;
+    string public name;
+    uint256 public totalSupply;
+    
     // MODIFIER
 
     // CONSTRUCTOR
-    function localCurrency(){
-        
+    function localCurrency(string _coinName, uint256 _initialSupply){
+        balanceOf[msg.sender] = _initialSupply;
+        name = _coinName;
+        totalSupply = _initialSupply;
     }
-    /// @param _owner The address of the account to add new localCurrency
-    /// @param _LctoCreate The amount of localCurrency to create
-    /// @return Wether the creation is succesful or note
-    function create(address _owner, uint256 _LctoCreate) returns (bool success){
-    
-         if (balances[msg.sender] >= _LctoCreate && _LctoCreate > 0) {
-            balances[msg.sender] -= _LctoCreate;
-            balances[_owner] += _LctoCreate;
-            Transfer(msg.sender, _owner, _LctoCreate);
-            return true;
-        } else { return false; }
-    }
-
-    /// @param _owner The address of the account to add new localCurrency
-    /// @param _LctoDestruct The amount of localCurrency to destruct
-    /// @return Wether the creation is succesful or note
-    function destruct(address _owner, uint256 _LctoDestruct) returns (bool success){
-        
-        if (balances[_owner] >= _LctoDestruct && _LctoDestruct > 0) {
-            balances[_owner] -= _LctoDestruct;
-            balances[msg.sender] += _LctoDestruct;
-            Transfer(_owner,msg.sender, _LctoDestruct);
-            return true;
-        } else { return false; }
-    }
+   
 
     // FUNCTIONS
 
+    /// @param _owner The address of the account to add new localCurrency
+    /// @param _LctoCreate The amount of localCurrency to create
+    /// @return Wether the creation is succesful or note
+    function createCurrency(address _owner, uint256 _LctoCreate) returns (bool success){
     
+         if ( _LctoCreate > 0) {
+            balanceOf[_owner] += _LctoCreate;
+            totalSupply += _LctoCreate;
+            return true;
+        } else { return false; }
+    }
+
+    /// @param _owner The address of the account to subtract localCurrency
+    /// @param _LctoDestruct The amount of localCurrency to destruct
+    /// @return Wether the creation is succesful or note
+    function destructCurrency(address _owner, uint256 _LctoDestruct) returns (bool success){
+        
+        if (balanceOf[_owner] >= _LctoDestruct && _LctoDestruct > 0) {
+            balanceOf[_owner] -= _LctoDestruct;
+            totalSupply -= _LctoDestruct;
+            return true;
+        } else { return false; }
+    }
+    
+    /// @param _to The address of the account to transfer the amount of localCurrency
+    /// @param _value The amount of localCurrency to transfer
+    /// @return Wether the transfer is succesful or note
+    function transfer(address _to, uint256 _value) returns (bool success) {
+        
+        if (balanceOf[msg.sender] >= _value && _value > 0) {
+            balanceOf[msg.sender] -= _value;
+            balanceOf[_to] += _value;
+            Transfer(msg.sender, _to, _value);
+            return true;
+        } else { return false; }
+    }
+    
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Construct(address indexed _owner, uint256 _value);
+    event Destruct(address indexed _owner, uint256 _value);
 }
 
