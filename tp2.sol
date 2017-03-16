@@ -18,4 +18,9 @@ contract localCurrency {
         balanceOf[msg.sender] -= _value;                     // Subtract from the sender
         balanceOf[_to] += _value;                            // Add the same to the recipient
     }
+
+
+
+
+    
 }
